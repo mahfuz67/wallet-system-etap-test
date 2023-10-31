@@ -23,7 +23,6 @@ export class TransactionService {
          },
          include: {
             wallet: true,
-
          },
       });
 
@@ -53,47 +52,101 @@ export class TransactionService {
                (trx) => trx.type === 'WALLET_FUNDING',
             );
 
-            const walletFundingAmount = walletFundingTransactions.reduce(
-               (acc, trx) => acc + trx.amount,
-               0,
-            );
+            const walletFundingNairaAmount = walletFundingTransactions
+               .filter((trx) => trx.currency === 'NGN')
+               .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const walletFundingDollarAmount = walletFundingTransactions
+               .filter((trx) => trx.currency === 'USD')
+               .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const walletFundingPoundAmount = walletFundingTransactions
+               .filter((trx) => trx.currency === 'GBP')
+               .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const walletFundingEuroAmount = walletFundingTransactions
+               .filter((trx) => trx.currency === 'EUR')
+               .reduce((acc, trx) => acc + trx.amount, 0);
 
             const creditWalletTransferTransactions = transactions.filter(
                (trx) => trx.type === 'TRANSFER' && trx.flow === 'INFLOW',
             );
 
-            const creditWalletTransferAmount =
-               creditWalletTransferTransactions.reduce(
-                  (acc, trx) => acc + trx.amount,
-                  0,
-               );
+            const creditWalletTransferNairaAmount =
+               creditWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'NGN')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const creditWalletTransferDollarAmount =
+               creditWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'USD')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const creditWalletTransferPoundAmount =
+               creditWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'GBP')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const creditWalletTransferEuroAmount =
+               creditWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'EUR')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
 
             const debitWalletTransferTransactions = transactions.filter(
                (trx) => trx.type === 'TRANSFER' && trx.flow === 'OUTFLOW',
             );
 
-            const debitWalletTransferAmount =
-               debitWalletTransferTransactions.reduce(
-                  (acc, trx) => acc + trx.amount,
-                  0,
-               );
+            const debitWalletTransferNairaAmount =
+               debitWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'NGN')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const debitWalletTransferDollarAmount =
+               debitWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'USD')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const debitWalletTransferPoundAmount =
+               debitWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'GBP')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
+
+            const debitWalletTransferEuroAmount =
+               debitWalletTransferTransactions
+                  .filter((trx) => trx.currency === 'EUR')
+                  .reduce((acc, trx) => acc + trx.amount, 0);
 
             return {
                [key]: {
                   walletFunding: {
                      data: walletFundingTransactions,
-                     amount: walletFundingAmount,
+                     amount: {
+                        naira: walletFundingNairaAmount,
+                        dollar: walletFundingDollarAmount,
+                        pound: walletFundingPoundAmount,
+                        euro: walletFundingEuroAmount,
+                     },
                      count: walletFundingTransactions.length,
                   },
                   walletTransfer: {
                      credit: {
                         data: creditWalletTransferTransactions,
-                        amount: creditWalletTransferAmount,
+                        amount: {
+                           naira: creditWalletTransferNairaAmount,
+                           dollar: creditWalletTransferDollarAmount,
+                           pound: creditWalletTransferPoundAmount,
+                           euro: creditWalletTransferEuroAmount,
+                        },
                         count: creditWalletTransferTransactions.length,
                      },
                      debit: {
                         data: debitWalletTransferTransactions,
-                        amount: debitWalletTransferAmount,
+                        amount: {
+                           naira: debitWalletTransferNairaAmount,
+                           dollar: debitWalletTransferDollarAmount,
+                           pound: debitWalletTransferPoundAmount,
+                           euro: debitWalletTransferEuroAmount,
+                        },
                         count: debitWalletTransferTransactions.length,
                      },
                   },

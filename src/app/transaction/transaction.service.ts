@@ -18,6 +18,7 @@ import { TransactionPayload } from '@etap-utils/payment/dto';
 import { Currency, User, Wallet } from '@prisma/client';
 import { Config, MOCKEXCHANGERATES } from '@etap-utils/config';
 import * as argon from 'argon2';
+import { channel } from 'diagnostics_channel';
 
 @Injectable()
 export class TransactionService {
@@ -95,13 +96,16 @@ export class TransactionService {
       const reference = this.generateRandomReference();
 
       //generate payment link
-      const paymentLink = await this.generatePaystackPaymentLink({
-         reference: reference,
-         amount: dto.amount,
-         email: user.email,
-         currency: wallet.currency,
-         metadata: metadata,
-      });
+      const paymentLink = await this.generatePaystackPaymentLink(
+         {
+            reference: reference,
+            amount: dto.amount,
+            email: user.email,
+            currency: wallet.currency,
+            metadata: metadata,
+         },
+         dto.amount >= 1000000 ? ['bank'] : ['card', 'bank'],
+      );
 
       //check if payment link was generated
       if (!paymentLink)

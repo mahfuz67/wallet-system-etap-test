@@ -1,52 +1,66 @@
-## Installation
+
+# ETAP Test Case Assessment
+
+A REST API to mock a basic wallet system
+
+## Tech Stack
+
+**Server:** Node, Nest.js
+
+**Database:** PostgreSQL
+
+**ORM:** Prisma
+
+**Payment Provider:** Paystack
+## Documentation
+
+[Documentation](https://documenter.getpostman.com/view/21867518/2s9YXbAkmm)
+
+
+## Running the app
+
+Clone the project
+
+```bash
+$ git clone https://github.com/mahfuz67/wallet-system-etap-test
+```
+
+Copy the content of .env.example file to a new file .env and replace the variables with the appropriate values.
+
+To run locally, You must have progresSQL installed and running on your machine or use the connections string of a hosted progresSQL server.
+
+This webhook url should be added to your paystack account to received a webhook event when a payment is made so the user wallet gets updated.
+```bash
+baseUrl/v1/transactions/paystack/webhook
+```
+
+Install dependencies
 
 ```bash
 $ yarn install
 ```
 
-## Running the app
-
-Copy the .env.example file to .env and fill in the values.
-
-Run prisma migrations
+Start the server locally
 
 ```bash
-$ yarn prisma:migrate:dev
+$ yarn run start:migrate:dev
 ```
 
-Run app locally
+Start server with docker
+
+Replace `localhost` in the `DATABASE_URL` environment variable with the name of the postgres container `postgres` 
 
 ```bash
-# development
-$ yarn start
+# Run in Dev
+$ docker compose -f docker-compose.dev.yml up --build 
 
-# watch mode
-$ npm run start:dev
+# Run Prod
+$ docker compose -f docker-compose.yml up --build
 
-# production mode
-$ npm run start:prod
+# Kill dev (Remove volumes)
+$ docker compose -f docker-compose.dev.yml down -v
+
+# Kill prod (Remove volumes)
+$ docker compose -f docker-compose.yml down -v
 ```
 
-## Running with docker
-
-```bash
-# build docker images and run
-$ docker-compose up --build
-```
-
-<!-- ## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-``` -->
-
-## License
-
-Nest is [MIT licensed](LICENSE).
