@@ -22,7 +22,7 @@ A REST API to mock a basic wallet system
 Clone the project
 
 ```bash
-$ git clone https://github.com/mahfuz67/wallet-system-etap-test
+git clone https://github.com/mahfuz67/wallet-system-etap-test
 ```
 
 Copy the content of .env.example file to a new file .env and replace the variables with the appropriate values.
@@ -37,13 +37,13 @@ baseUrl/v1/transactions/paystack/webhook
 Install dependencies
 
 ```bash
-$ yarn install
+yarn install
 ```
 
 Start the server locally
 
 ```bash
-$ yarn run start:migrate:dev
+yarn run start:migrate:dev
 ```
 
 Start server with docker
@@ -52,15 +52,15 @@ Replace `localhost` in the `DATABASE_URL` environment variable with the name of 
 
 ```bash
 # Run in Dev
-$ docker compose -f docker-compose.dev.yml up --build 
+docker compose -f docker-compose.dev.yml up --build 
 
 # Run Prod
-$ docker compose -f docker-compose.yml up --build
+docker compose -f docker-compose.yml up --build
 
 # Kill dev (Remove volumes)
-$ docker compose -f docker-compose.dev.yml down -v
+docker compose -f docker-compose.dev.yml down -v
 
 # Kill prod (Remove volumes)
-$ docker compose -f docker-compose.yml down -v
+docker compose -f docker-compose.yml down -v
 ```
 
